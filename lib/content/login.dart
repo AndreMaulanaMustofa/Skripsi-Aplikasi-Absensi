@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:simple_listshop/content/BottomNavigator/BottomNavigate.dart';
+import 'package:absen_polinema/content/BottomNavigator/BottomNavigate.dart';
 
 class loginPage extends StatefulWidget {
   const loginPage({super.key});

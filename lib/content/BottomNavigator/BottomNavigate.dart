@@ -1,8 +1,8 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:simple_listshop/content/item_page.dart';
-import 'package:simple_listshop/content/user.dart';
+import 'package:absen_polinema/content/item_page.dart';
+import 'package:absen_polinema/content/';
 
 class BottomNavigate extends StatefulWidget {
   const BottomNavigate({super.key});
