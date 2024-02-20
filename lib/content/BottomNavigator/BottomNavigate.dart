@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:absen_polinema/content/item_page.dart';
-import 'package:absen_polinema/content/';
+import 'package:absen_polinema/content/user.dart';
 
 class BottomNavigate extends StatefulWidget {
   const BottomNavigate({super.key});
