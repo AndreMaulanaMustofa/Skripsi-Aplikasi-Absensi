@@ -1,5 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:absen_polinema/content/BottomNavigator/BottomNavigate.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
 
 class loginPage extends StatefulWidget {
   const loginPage({super.key});
@@ -10,49 +14,125 @@ class loginPage extends StatefulWidget {
 
 class _loginPageState extends State<loginPage> {
 
-  final username = TextEditingController();
-  final password = TextEditingController();
+  TextEditingController username = TextEditingController();
+  TextEditingController password = TextEditingController();
+
+  Future<void> _login() async {
+    var url = Uri.parse("http://192.168.18.204/skripsi_system/login.php");
+    var response = await http.post(
+      url,
+      body: {
+        "NIM": username.text,
+        "Password": password.text,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      try {
+        // Handle the response here
+        var jsonResponse = json.decode(response.body);
+
+        if (jsonResponse['status'] == 'success') {
+          // Navigate to the next screen on successful login
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const BottomNavigate(),
+            ),
+          );
+        } else {
+          // Handle case when login is not successful
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text("Warning"),
+                content: Text(jsonResponse['message'] ?? "Login failed"),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("OK"),
+                  ),
+                ],
+              );
+            },
+          );
+        }
+      } catch (error) {
+        // Handle error during JSON decoding
+        print("Error decoding JSON: $error");
+      }
+    } else {
+      // Handle HTTP error status codes
+      print("HTTP error ${response.statusCode}");
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: Column(
+        body: Container(
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 2, 49, 88),
+            image: DecorationImage(
+              image: const AssetImage('img/wallpaperPoltek.jpg'),
+              fit: BoxFit.cover,
+              colorFilter: ColorFilter.mode(
+                const Color.fromARGB(255, 54, 66, 77).withOpacity(0.2),
+                BlendMode.dstATop,
+              ),
+            ),
+          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            padding: const EdgeInsets.only(top: 240),
+            alignment: Alignment.center,
             child: const Center(
-              child: Text("PROTOTYPE",
-            style: TextStyle(
-              color: Colors.green,
-              fontWeight: FontWeight.w700,
-              fontFamily: "Roboto",
-              fontSize: 24,
-            ),
-            ),
+              child: Text("LOGIN",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Roboto",
+                  fontSize: 24,
+                ),
+              ),
             ),
           ),
           Container(
             padding: const EdgeInsets.only(left: 25, right: 25, top: 30),
             child: Center(
               child: TextField(
+                controller: username,
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+                textAlign: TextAlign.center,
                 decoration: const InputDecoration(
-                  hintText: "Email",
-                  icon: Padding(
-                    padding: EdgeInsets.only(top: 4),
-                    child: Icon(Icons.account_circle, size: 35,),
-                  ),
+                  hintText: "NIM",
                   hintStyle: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                   enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.green),
+                    borderSide: BorderSide(color: Colors.blue),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue),
                   ),
                 ),
-                controller: username,
+                style: const TextStyle(
+                  fontFamily: "Calibri",
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
@@ -63,23 +143,27 @@ class _loginPageState extends State<loginPage> {
                   children: [
                     Expanded(
                       child: TextField(
+                        controller: password,
+                        textAlign: TextAlign.center,
                         obscureText: true,
                         decoration: const InputDecoration(
                           hintText: "Password",
-                          icon: Padding(
-                            padding: EdgeInsets.only(top: 4),
-                            child: Icon(Icons.lock, size: 35,),
-                          ),
                           hintStyle: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
-                            color: Colors.black,
+                            color: Colors.white,
                           ),
                           enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.green),
+                            borderSide: BorderSide(color: Colors.blue),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.blue),
                           ),
                         ),
-                        controller: password,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: "Calibri",
+                        ),
                       ),
                     ),
                   ],
@@ -91,56 +175,7 @@ class _loginPageState extends State<loginPage> {
               child: Center(
                 child: ElevatedButton(
                   onPressed: () {
-                    var usernametxt = username.text;
-                    var passwordtxt = password.text;
-                    if(usernametxt == "andre1442" && passwordtxt == "password"){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const BottomNavigate(),
-                        ),
-                      );
-                    }else if(passwordtxt != "password"  && passwordtxt.isEmpty){
-                      AlertDialog alert = AlertDialog(
-                        title: const Text("Warning"),
-                        content: const Text("Password anda salah"),
-                        actions: [
-                          TextButton(
-                            onPressed: (){
-                              Navigator.of(context).pop();
-                            }, 
-                            child: const Text("OK")
-                          ),
-                        ],
-                      );
-
-                      showDialog(
-                        context: context, 
-                        builder: (BuildContext context) {
-                          return alert;
-                        }
-                      );
-                    }else if(usernametxt.isEmpty && passwordtxt.isEmpty){
-                      AlertDialog warn = AlertDialog(
-                        title: const Text("Warning"),
-                        content: const Text("Isi Data Terlebih Dahulu!"),
-                        actions: [
-                          TextButton(
-                            onPressed: (){
-                              Navigator.of(context).pop();
-                            }, 
-                            child: const Text("OK")
-                          ),
-                        ],
-                      );
-
-                      showDialog(
-                        context: context, 
-                        builder: (BuildContext context) {
-                          return warn;
-                        }
-                      );
-                    }
+                    _login();
                   },
                   child: const Padding(
                     padding: EdgeInsets.only(left: 149, right: 149),
@@ -154,6 +189,7 @@ class _loginPageState extends State<loginPage> {
               ),
             )
         ],
+      ),
       ),
       ),
     );
