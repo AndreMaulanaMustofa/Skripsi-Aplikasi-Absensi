@@ -118,8 +118,8 @@ class _UserPageState extends State<UserPage> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(right: 186),
-              margin: EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(right: 186),
+              margin: const EdgeInsets.only(top: 20),
               decoration: BoxDecoration(
                 color: Colors.grey.shade200,
                 borderRadius: BorderRadius.circular(20),
@@ -127,12 +127,12 @@ class _UserPageState extends State<UserPage> {
               width: 320,
               child: TextButton.icon(
                 onPressed: () {},
-                icon: Icon(
+                icon: const Icon(
                   Icons.settings_outlined,
                   color: Colors.black,
                   size: 20,
                 ),
-                label: Text(
+                label: const Text(
                   "\t\tSettings",
                   style: TextStyle(
                     color: Colors.black,
@@ -142,8 +142,8 @@ class _UserPageState extends State<UserPage> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(right: 147),
-              margin: EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(right: 147),
+              margin: const EdgeInsets.only(top: 20),
               decoration: BoxDecoration(
                 color: Colors.grey.shade200,
                 borderRadius: BorderRadius.circular(20),
@@ -151,12 +151,12 @@ class _UserPageState extends State<UserPage> {
               width: 320,
               child: TextButton.icon(
                 onPressed: () {},
-                icon: Icon(
+                icon: const Icon(
                   Icons.group_add_outlined,
                   color: Colors.black,
                   size: 20,
                 ),
-                label: Text(
+                label: const Text(
                   "\t\tInvite a Friend",
                   style: TextStyle(
                     color: Colors.black,
@@ -166,8 +166,8 @@ class _UserPageState extends State<UserPage> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(right: 188),
-              margin: EdgeInsets.only(top: 20),
+              padding: const EdgeInsets.only(right: 188),
+              margin: const EdgeInsets.only(top: 20),
               decoration: BoxDecoration(
                 color: Colors.grey.shade200,
                 borderRadius: BorderRadius.circular(20),
@@ -178,16 +178,16 @@ class _UserPageState extends State<UserPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => loginPage(),
+                      builder: (context) => const loginPage(),
                     ),
                   );
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.logout_outlined,
                   color: Colors.black,
                   size: 20,
                 ),
-                label: Text(
+                label: const Text(
                   "\t\tLog Out",
                   style: TextStyle(
                     color: Colors.black,
