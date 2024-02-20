@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
-import 'package:absen_polinema/content/item_page.dart';
+import 'package:absen_polinema/content/mapPage.dart';
 import 'package:absen_polinema/content/user.dart';
 
 class BottomNavigate extends StatefulWidget {
@@ -54,7 +54,7 @@ void _onItemTapped(int index){
 }
 
 List<Widget> pageList = [
-  const itemPage(),
+  const mapPage(),
   const UserPage(),
 ];
 }

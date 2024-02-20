@@ -2,14 +2,14 @@
 
 import 'package:flutter/material.dart';
 
-class itemPage extends StatefulWidget {
-  const itemPage({super.key});
+class mapPage extends StatefulWidget {
+  const mapPage({super.key});
 
   @override
-  State<itemPage> createState() => _itemPageState();
+  State<mapPage> createState() => _mapPageState();
 }
 
-class _itemPageState extends State<itemPage> {
+class _mapPageState extends State<mapPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
