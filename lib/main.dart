@@ -17,11 +17,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: AnimatedSplashScreen(
         duration: 3000,
-        splash: Image.asset('img/splash.png'),
+        splash: Image.asset('img/polinema_logo.png'),
         nextScreen: const loginPage(),
         splashTransition: SplashTransition.scaleTransition,
         pageTransitionType: PageTransitionType.leftToRight,
-        backgroundColor: Colors.green,
+        backgroundColor: const Color.fromARGB(255, 14, 26, 197),
       ),
     );
   }
