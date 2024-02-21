@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.absen_polinema">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="absen_polinema"
         android:name="${applicationName}"
