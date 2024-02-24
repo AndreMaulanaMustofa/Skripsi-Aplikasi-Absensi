@@ -15,6 +15,7 @@ class mapPage extends StatefulWidget {
 
 class _mapPageState extends State<mapPage> {
   LocationService locationService = LocationService();
+  MapController mapController = MapController();
   double latitude  = 0;
   double longitude = 0;
   
@@ -54,7 +55,7 @@ class _mapPageState extends State<mapPage> {
                 ),
                 ),
               ),
-              color: Colors.green,
+              color: Color.fromARGB(255, 31, 3, 155),
               height: 60,
             ),
             Flexible(
@@ -63,6 +64,7 @@ class _mapPageState extends State<mapPage> {
                   initialCenter: LatLng(-7.94385, 112.61463),
                   initialZoom: 18,
                 ),
+                mapController: mapController,
                 children: [
                   TileLayer(
                     urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -87,6 +89,18 @@ class _mapPageState extends State<mapPage> {
           ],
         ),
       ),
+      floatingActionButton: Padding(
+          padding:
+              const EdgeInsets.only(bottom: 25.0),
+          child: FloatingActionButton(
+            onPressed: () {
+              mapController.move(LatLng(latitude, longitude), 19);
+            },
+            backgroundColor: Colors.blue,
+            child: const Icon(Icons.my_location),
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       ),
     );
   }
