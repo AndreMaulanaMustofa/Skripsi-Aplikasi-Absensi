@@ -22,12 +22,12 @@ class _BottomNavigateState extends State<BottomNavigate> {
         bottomNavigationBar: BottomNavigationBar(
         items: [
           const BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
+            icon: Icon(Icons.map_outlined),
+            label: "Map",
           ),
           const BottomNavigationBarItem(
             icon: Icon(Icons.manage_accounts), 
-            label: "User",
+            label: "Data Mahasiswa",
           ),
         ],
         iconSize: 25,
