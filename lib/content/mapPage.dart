@@ -1,5 +1,7 @@
-// ignore_for_file: sort_child_properties_last, camel_case_types
+// ignore_for_file: file_names
 
+import 'package:absen_polinema/content/LocationSystem/location_service.dart';
+import 'package:absen_polinema/content/LocationSystem/user_location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -12,6 +14,27 @@ class mapPage extends StatefulWidget {
 }
 
 class _mapPageState extends State<mapPage> {
+  LocationService locationService = LocationService();
+  double latitude  = 0;
+  double longitude = 0;
+  
+  @override
+  void initState(){
+    super.initState();
+    locationService.locationStream.listen((userLocation) {
+      setState(() {
+        latitude  = userLocation.latitude;
+        longitude = userLocation.longitude;
+      });
+    });
+  }
+
+  @override
+  void dispose(){
+    locationService.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -48,11 +71,11 @@ class _mapPageState extends State<mapPage> {
                   MarkerLayer(
                     markers: [
                       Marker(
-                        point: LatLng(-7.94295, 112.63572),
+                        point: LatLng(latitude, longitude),
                         child: Builder(
-                          builder: (context) => Icon(
-                            Icons.pin_drop,
-                            color: Colors.red,
+                          builder: (context) => const Icon(
+                            Icons.circle_rounded,
+                            color: Colors.blue,
                           )
                         )
                       )
