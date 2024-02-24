@@ -60,7 +60,7 @@ class _mapPageState extends State<mapPage> {
             Flexible(
               child: FlutterMap(
                 options: MapOptions(
-                  initialCenter: LatLng(latitude, longitude),
+                  initialCenter: LatLng(-7.94295, 112.63572),
                   initialZoom: 19,
                 ), 
                 children: [
