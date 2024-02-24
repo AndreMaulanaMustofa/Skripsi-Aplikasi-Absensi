@@ -18,7 +18,7 @@ class _loginPageState extends State<loginPage> {
   TextEditingController password = TextEditingController();
 
   Future<void> _login() async {
-    var url = Uri.parse("http://192.168.18.204/skripsi_system/login.php");
+    var url = Uri.parse("https://c32e-182-253-50-70.ngrok-free.app/skripsi_system/login.php");
     var response = await http.post(
       url,
       body: {
@@ -200,7 +200,7 @@ class _loginPageState extends State<loginPage> {
                     child: Text("Login"),
                   ),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.green,
+                    primary: Color.fromARGB(255, 31, 3, 155),
                     onPrimary: Colors.white,
                   ),
                 ),
