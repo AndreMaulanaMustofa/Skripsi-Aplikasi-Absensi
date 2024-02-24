@@ -45,7 +45,7 @@ class _mapPageState extends State<mapPage> {
           children: [
             Container(
               child: const Center(
-                child: Text("Your Location",
+                child: Text("Polinema Location",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 22,
@@ -59,10 +59,10 @@ class _mapPageState extends State<mapPage> {
             ),
             Flexible(
               child: FlutterMap(
-                options: MapOptions(
-                  initialCenter: LatLng(-7.94295, 112.63572),
-                  initialZoom: 19,
-                ), 
+                options: const MapOptions(
+                  initialCenter: LatLng(-7.94385, 112.61463),
+                  initialZoom: 18,
+                ),
                 children: [
                   TileLayer(
                     urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
