@@ -61,6 +61,24 @@ class _loginPageState extends State<loginPage> {
           );
         }
       } catch (error) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text("Warning"),
+              content: Text("Server tidak terhubung!"),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("OK"),
+                ),
+              ],
+            );
+          },
+        );
+
         // Handle error during JSON decoding
         print("Error decoding JSON: $error");
       }
