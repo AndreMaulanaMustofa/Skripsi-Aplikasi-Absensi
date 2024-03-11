@@ -165,29 +165,37 @@ class _loginPageState extends State<loginPage> {
                     ),
                   ),
                 ),
-                TextField(
-                  maxLength: 10,
-                  textAlign: TextAlign.center,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly,
-                  ],
-                  controller: username,
-                  decoration: InputDecoration(
-                    hintText: 'NIM',
-                    fillColor: Colors.white,
-                    filled: true,
+                Padding(
+                  padding: EdgeInsets.only(bottom: 16.0),
+                  child: TextField(
+                    maxLength: 10,
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly,
+                    ],
+                    controller: username,
+                    decoration: InputDecoration(
+                      hintText: 'NIM',
+                      fillColor: Colors.white,
+                      filled: true,
+                      counterText: '',
+                    ),
                   ),
                 ),
-                TextField(
-                  maxLength: 10,
-                  textAlign: TextAlign.center,
-                  obscureText: true,
-                  controller: password,
-                  decoration: InputDecoration(
-                    hintText: 'Password',
-                    fillColor: Colors.white,
-                    filled: true,
+                Padding(
+                  padding: EdgeInsets.only(bottom: 16.0),
+                  child: TextField(
+                    maxLength: 10,
+                    textAlign: TextAlign.center,
+                    obscureText: true,
+                    controller: password,
+                    decoration: InputDecoration(
+                      hintText: 'Password',
+                      fillColor: Colors.white,
+                      filled: true,
+                      counterText: '',
+                    ),
                   ),
                 ),
                 Container(
