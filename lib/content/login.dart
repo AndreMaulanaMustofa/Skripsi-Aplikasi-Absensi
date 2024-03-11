@@ -18,7 +18,7 @@ class _loginPageState extends State<loginPage> {
   TextEditingController password = TextEditingController();
 
   Future<void> _login() async {
-    var url = Uri.parse("https://c32e-182-253-50-70.ngrok-free.app/skripsi_system/login.php");
+    var url = Uri.parse("http://192.168.18.204/skripsi_system/login.php");
     var response = await http.post(
       url,
       body: {
@@ -113,99 +113,100 @@ class _loginPageState extends State<loginPage> {
           Container(
             alignment: Alignment.center,
             child: const Center(
-              child: Text("LOGIN",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: "Roboto",
-                  fontSize: 24,
-                ),
+              child: Image(
+                image: const AssetImage('img/polinema_logo.png'),
+                width: 80,
+                alignment: Alignment.center,
+              )
+            ),
+          ),
+          Container(
+            alignment: Alignment.center,
+            padding: EdgeInsets.all(16.0),
+            margin: EdgeInsets.all(20.0),
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              color: Color.fromARGB(255, 175, 117, 30),
+              border: Border.all(color: Color.fromARGB(255, 175, 117, 30), width: 2.0),
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: Text(
+              'SISTEM ABSENSI POLITEKNIK NEGERI MALANG MENGGUNAKAN QR CODE',
+              textAlign: TextAlign.center,
+              softWrap: true,
+              style: TextStyle(
+                fontSize: 17.0,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
             ),
           ),
           Container(
-            padding: const EdgeInsets.only(left: 25, right: 25, top: 30),
-            child: Center(
-              child: TextField(
-                controller: username,
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly,
-                ],
-                textAlign: TextAlign.center,
-                decoration: const InputDecoration(
-                  hintText: "NIM",
-                  hintStyle: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white,
-                  ),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blue),
-                  ),
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blue),
-                  ),
-                ),
-                style: const TextStyle(
-                  fontFamily: "Calibri",
-                  color: Colors.white,
-                ),
-              ),
+            alignment: Alignment.center,
+            padding: EdgeInsets.all(16.0),
+            margin: EdgeInsets.all(20.0),
+            decoration: BoxDecoration(
+              shape: BoxShape.rectangle,
+              color: Color.fromARGB(255, 31, 3, 155),
+              border: Border.all(
+                color: Color.fromARGB(255, 31, 3, 155), width: 2.0),
+              borderRadius: BorderRadius.circular(8.0),
             ),
-          ),
-          Container(
-              padding: const EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 30),
-              child: Center(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: password,
-                        textAlign: TextAlign.center,
-                        obscureText: true,
-                        decoration: const InputDecoration(
-                          hintText: "Password",
-                          hintStyle: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white,
-                          ),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Colors.blue),
-                          ),
-                        ),
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: "Calibri",
-                        ),
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(bottom: 16.0),
+                  child: Text(
+                    'SELAMAT DATANG',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                TextField(
+                  maxLength: 10,
+                  textAlign: TextAlign.center,
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
+                  controller: username,
+                  decoration: InputDecoration(
+                    hintText: 'NIM',
+                    fillColor: Colors.white,
+                    filled: true,
+                  ),
+                ),
+                TextField(
+                  maxLength: 10,
+                  textAlign: TextAlign.center,
+                  obscureText: true,
+                  controller: password,
+                  decoration: InputDecoration(
+                    hintText: 'Password',
+                    fillColor: Colors.white,
+                    filled: true,
+                  ),
+                ),
+                Container(
+                  child: Center(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _login();
+                      },
+                      child: Text("Login"),
+                      style: ElevatedButton.styleFrom(
+                        primary: Color.fromARGB(255, 175, 117, 30),
+                        onPrimary: Colors.white,
                       ),
                     ),
-                  ],
-                ),
-              ),
-            ),
-            // ignore: avoid_unnecessary_containers
-            Container(
-              child: Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    _login();
-                  },
-                  child: const Padding(
-                    padding: EdgeInsets.only(left: 149, right: 149),
-                    child: Text("Login"),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 31, 3, 155),
-                    onPrimary: Colors.white,
                   ),
                 ),
-              ),
-            )
+              ],
+            ) 
+          )
         ],
       ),
       ),
