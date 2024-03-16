@@ -2,9 +2,9 @@ import 'dart:math' as Math;
 
 class GeofenceHaversine{
   static bool isInsideGeofence(double userLatitude, double userLongitude) {
-      double geofenceLatitude = -7.94385; // Ganti dengan nilai latitude zona geofence Anda
-      double geofenceLongitude = 112.61463; // Ganti dengan nilai longitude zona geofence Anda
-      double radiusMeter = 250.0; // Ganti dengan nilai radius zona geofence Anda
+      double geofenceLatitude = -7.94386; // Ganti dengan nilai latitude zona geofence Anda
+      double geofenceLongitude = 112.61476; // Ganti dengan nilai longitude zona geofence Anda
+      double radiusMeter = 55.0; // Ganti dengan nilai radius zona geofence Anda
 
       // Menghitung jarak antara lokasi pengguna dan pusat geofence
       double distance = calculateDistance(userLatitude, userLongitude, geofenceLatitude, geofenceLongitude);
