@@ -26,8 +26,10 @@ class _mapPageState extends State<mapPage> {
         latitude  = userLocation.latitude;
         longitude = userLocation.longitude;
         
-        if (GeofenceService.isInsideGeofence(latitude, longitude)) {
+        if (GeofenceHaversine.isInsideGeofence(latitude, longitude)) {
           print('User telah memasuki zona');
+        }else {
+          print('User sedang diluar zona');
         }
       });
     });
