@@ -1,11 +1,10 @@
-// ignore_for_file: file_names
+import 'dart:async';
 
+import 'package:absen_polinema/content/LocationSystem/geofencing_service.dart';
 import 'package:absen_polinema/content/LocationSystem/location_service.dart';
-import 'package:absen_polinema/content/LocationSystem/user_location.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-
 class mapPage extends StatefulWidget {
   const mapPage({super.key});
 
@@ -26,6 +25,10 @@ class _mapPageState extends State<mapPage> {
       setState(() {
         latitude  = userLocation.latitude;
         longitude = userLocation.longitude;
+        
+        if (GeofenceService.isInsideGeofence(latitude, longitude)) {
+          print('User telah memasuki zona');
+        }
       });
     });
   }
@@ -82,7 +85,21 @@ class _mapPageState extends State<mapPage> {
                         )
                       )
                     ]
-                  )
+                  ),
+                  CircleLayer(
+                    circles: [
+                      CircleMarker(
+                        point: LatLng(-7.94386, 112.61476),
+                        radius: 55,
+                        useRadiusInMeter: true,
+                        color:
+                            Colors.blue.withOpacity(0.3), // Warna lingkaran
+                        borderColor:
+                            Colors.blue, // Warna garis tepi lingkaran
+                        borderStrokeWidth: 2, // Lebar garis tepi lingkaran
+                      ),
+                    ],
+                  ),
                 ]
               )
             )
