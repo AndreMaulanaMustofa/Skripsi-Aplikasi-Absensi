@@ -88,7 +88,7 @@ class _mapPageState extends State<mapPage> {
                       )
                     ]
                   ),
-                  CircleLayer(
+                  CircleLayer(  
                     circles: [
                       CircleMarker(
                         point: LatLng(-7.94386, 112.61476),
