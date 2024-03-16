@@ -1,6 +1,6 @@
 import 'dart:math' as Math;
 
-class GeofenceService{
+class GeofenceHaversine{
   static bool isInsideGeofence(double userLatitude, double userLongitude) {
       double geofenceLatitude = -7.94385; // Ganti dengan nilai latitude zona geofence Anda
       double geofenceLongitude = 112.61463; // Ganti dengan nilai longitude zona geofence Anda
