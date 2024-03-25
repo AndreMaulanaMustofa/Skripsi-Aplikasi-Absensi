@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:absen_polinema/content/LocationSystem/geofencing_service.dart';
 import 'package:absen_polinema/content/LocationSystem/location_service.dart';
 import 'package:flutter/material.dart';

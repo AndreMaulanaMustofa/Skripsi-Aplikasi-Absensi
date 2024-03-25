@@ -37,7 +37,13 @@ class _loginPageState extends State<loginPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const BottomNavigate(),
+              builder: (context) => BottomNavigate(
+                NIM: jsonResponse['NIM'],
+                namaLengkap: jsonResponse['namaLengkap'],
+                Domisili: jsonResponse['Domisili'],
+                nomorTelp: jsonResponse['NoTelp'],
+                kelas: jsonResponse['kelas']
+              ),
             ),
           );
         } else {
