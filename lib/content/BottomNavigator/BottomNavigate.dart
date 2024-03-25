@@ -1,11 +1,25 @@
 // ignore_for_file: file_names
 
+import 'package:absen_polinema/content/scanPage.dart';
 import 'package:flutter/material.dart';
 import 'package:absen_polinema/content/mapPage.dart';
 import 'package:absen_polinema/content/user.dart';
 
 class BottomNavigate extends StatefulWidget {
-  const BottomNavigate({super.key});
+  final String NIM;
+  final String namaLengkap;
+  final String Domisili;
+  final String kelas;
+  final String nomorTelp;
+  
+  const BottomNavigate({
+    super.key,
+    required this.NIM,
+    required this.namaLengkap, 
+    required this.Domisili, 
+    required this.kelas, 
+    required this.nomorTelp,
+  });
 
   @override
   State<BottomNavigate> createState() => _BottomNavigateState();
@@ -41,20 +55,41 @@ class _BottomNavigateState extends State<BottomNavigate> {
         selectedFontSize: 10,
         unselectedFontSize: 10,
         showUnselectedLabels: false,
+
       ),
-      body: pageList.elementAt(_selectedIndex),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          Navigator.push(
+            context, 
+            MaterialPageRoute(
+              builder: (BuildContext) => const scanPage()
+            ),
+          );
+        },
+        child: Icon(Icons.camera_alt_outlined),
+        backgroundColor: Color.fromARGB(255, 175, 117, 30),
+        foregroundColor: Colors.white,
+      ),
+      body: _selectedIndex == 0 ? UserPage(
+          NIM: widget.NIM,
+          namaLengkap: widget.namaLengkap,
+          Domisili: widget.Domisili,
+          nomorTelp: widget.nomorTelp,
+          kelas: widget.kelas,
+        ) : const mapPage(),
       ),
     );
   }
 
-void _onItemTapped(int index){
-  setState(() {
-    _selectedIndex = index;
-  });
-}
+  void _onItemTapped(int index){
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
-List<Widget> pageList = [
-  const mapPage(),
-  const UserPage(),
-];
+  // List<Widget> pageList = [
+  //   const UserPage(NIM: widget.NIM),
+  //   const mapPage(),
+  // ];
 }
