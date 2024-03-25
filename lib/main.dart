@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: AnimatedSplashScreen(
-        duration: 3000,
+        duration: 1500,
         splash: Image.asset('img/polinema_logo.png'),
         nextScreen: const loginPage(),
         splashTransition: SplashTransition.scaleTransition,
