@@ -63,11 +63,11 @@ class _BottomNavigateState extends State<BottomNavigate> {
           Navigator.push(
             context, 
             MaterialPageRoute(
-              builder: (BuildContext) => const scanPage()
+              builder: (context) => const scanPage()
             ),
           );
         },
-        child: Icon(Icons.camera_alt_outlined),
+        child: Icon(Icons.qr_code_scanner_rounded),
         backgroundColor: Color.fromARGB(255, 175, 117, 30),
         foregroundColor: Colors.white,
       ),
