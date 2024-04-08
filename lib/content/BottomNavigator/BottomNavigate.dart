@@ -65,12 +65,12 @@ class _BottomNavigateState extends State<BottomNavigate> {
         bottomNavigationBar: BottomNavigationBar(
         items: [
           const BottomNavigationBarItem(
-            icon: Icon(Icons.map_outlined),
-            label: "Map",
-          ),
-          const BottomNavigationBarItem(
             icon: Icon(Icons.manage_accounts), 
             label: "Data Mahasiswa",
+          ),
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.map_outlined),
+            label: "Map",
           ),
         ],
         iconSize: 25,
@@ -106,7 +106,7 @@ class _BottomNavigateState extends State<BottomNavigate> {
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: const Text("Success"),
+                  title: const Text("Pemberitahuan"),
                   content: Text("Lokasi anda tidak berada di kampus!"),
                   actions: [
                     TextButton(
