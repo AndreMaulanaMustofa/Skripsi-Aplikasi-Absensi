@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:http/http.dart' as http;
 
 class scanPage extends StatefulWidget {
   final String NIM;
@@ -27,6 +30,93 @@ class _scanPageState extends State<scanPage> {
   String matkul = '';
   String jamMatkul = '';
   bool isBottomSheetOpened = false;
+
+  Future<void> _create(matkul, jam) async {
+    var url = Uri.parse("http://192.168.1.2/skripsi_system/create.php");
+    var response = await http.post(
+      url,
+      body: {
+        "NIM": nimController.text,
+        "namaMahasiswa": namaController.text,
+        "kelas": kelasController.text,
+        "semester": semesterController.text,
+        "mataKuliah": matkul,
+        "jam_kuliah": jam, 
+      },
+    );
+
+    if (response.statusCode == 200) {
+      try {
+        // Handle the response here
+        var jsonResponse = json.decode(response.body);
+
+        if (jsonResponse['status'] == 'success') {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text("Success"),
+                content: Text("Absensi telah ditambahkan!"),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("OK"),
+                  ),
+                ],
+              );
+            },
+          );
+        } else {
+          // Handle case when login is not successful
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text("Warning"),
+                content: Text(jsonResponse['message'] ?? "Absensi Gagal Ditambahkan!"),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("OK"),
+                  ),
+                ],
+              );
+            },
+          );
+        }
+      } catch (error) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text("Warning"),
+              content: const Text("Server tidak terhubung!"),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("OK"),
+                ),
+              ],
+            );
+          },
+        );
+
+        // Handle error during JSON decoding
+        print("Error decoding JSON: $error");
+      }
+    } else {
+      // Handle HTTP error status codes
+      print("HTTP error ${response.statusCode}");
+    }
+  }
 
   @override
   void dispose(){
@@ -313,7 +403,9 @@ class _scanPageState extends State<scanPage> {
                                   ),
                                 ],
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                _create(matkul, jamMatkul);
+                              },
                             ),
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
