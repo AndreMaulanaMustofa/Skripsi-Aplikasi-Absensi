@@ -2,9 +2,9 @@
     package="com.example.absen_polinema">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="absen_polinema"
+        android:label="Absensi Polinema"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/polinema_logo">
         <activity
             android:name=".MainActivity"
             android:exported="true"
