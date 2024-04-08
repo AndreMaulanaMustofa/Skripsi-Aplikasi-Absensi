@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:absen_polinema/content/BottomNavigator/BottomNavigate.dart';
@@ -18,7 +20,7 @@ class _loginPageState extends State<loginPage> {
   TextEditingController password = TextEditingController();
 
   Future<void> _login() async {
-    var url = Uri.parse("http://192.168.18.204/skripsi_system/login.php");
+    var url = Uri.parse("http://192.168.1.15/skripsi_system/login.php");
     var response = await http.post(
       url,
       body: {
@@ -37,12 +39,15 @@ class _loginPageState extends State<loginPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => BottomNavigate(
+              builder: (context) => 
+              BottomNavigate(
                 NIM: jsonResponse['NIM'],
                 namaLengkap: jsonResponse['namaLengkap'],
                 Domisili: jsonResponse['Domisili'],
                 nomorTelp: jsonResponse['NoTelp'],
-                kelas: jsonResponse['kelas']
+                kelas: jsonResponse['kelas'],
+                semester: jsonResponse['semester'],
+                jenisKelamin: jsonResponse['jenisKelamin'],
               ),
             ),
           );
@@ -72,7 +77,7 @@ class _loginPageState extends State<loginPage> {
           builder: (BuildContext context) {
             return AlertDialog(
               title: const Text("Warning"),
-              content: Text("Server tidak terhubung!"),
+              content: const Text("Server tidak terhubung!"),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -128,15 +133,15 @@ class _loginPageState extends State<loginPage> {
           ),
           Container(
             alignment: Alignment.center,
-            padding: EdgeInsets.all(16.0),
-            margin: EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(16.0),
+            margin: const EdgeInsets.all(20.0),
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
-              color: Color.fromARGB(255, 175, 117, 30),
-              border: Border.all(color: Color.fromARGB(255, 175, 117, 30), width: 2.0),
+              color: const Color.fromARGB(255, 175, 117, 30),
+              border: Border.all(color: const Color.fromARGB(255, 175, 117, 30), width: 2.0),
               borderRadius: BorderRadius.circular(8.0),
             ),
-            child: Text(
+            child: const Text(
               'SISTEM ABSENSI POLITEKNIK NEGERI MALANG MENGGUNAKAN QR CODE',
               textAlign: TextAlign.center,
               softWrap: true,
@@ -149,18 +154,18 @@ class _loginPageState extends State<loginPage> {
           ),
           Container(
             alignment: Alignment.center,
-            padding: EdgeInsets.all(16.0),
-            margin: EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(16.0),
+            margin: const EdgeInsets.all(20.0),
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
-              color: Color.fromARGB(255, 31, 3, 155),
+              color: const Color.fromARGB(255, 31, 3, 155),
               border: Border.all(
-                color: Color.fromARGB(255, 31, 3, 155), width: 2.0),
+                color: const Color.fromARGB(255, 31, 3, 155), width: 2.0),
               borderRadius: BorderRadius.circular(8.0),
             ),
             child: Column(
               children: [
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(bottom: 16.0),
                   child: Text(
                     'SELAMAT DATANG',
@@ -172,7 +177,7 @@ class _loginPageState extends State<loginPage> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(bottom: 16.0),
+                  padding: const EdgeInsets.only(bottom: 16.0),
                   child: TextField(
                     maxLength: 10,
                     textAlign: TextAlign.center,
@@ -181,7 +186,7 @@ class _loginPageState extends State<loginPage> {
                       FilteringTextInputFormatter.digitsOnly,
                     ],
                     controller: username,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'NIM',
                       fillColor: Colors.white,
                       filled: true,
@@ -190,13 +195,13 @@ class _loginPageState extends State<loginPage> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(bottom: 16.0),
+                  padding: const EdgeInsets.only(bottom: 16.0),
                   child: TextField(
                     maxLength: 10,
                     textAlign: TextAlign.center,
                     obscureText: true,
                     controller: password,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: 'Password',
                       fillColor: Colors.white,
                       filled: true,
@@ -210,9 +215,9 @@ class _loginPageState extends State<loginPage> {
                       onPressed: () {
                         _login();
                       },
-                      child: Text("Login"),
+                      child: const Text("Login"),
                       style: ElevatedButton.styleFrom(
-                        primary: Color.fromARGB(255, 175, 117, 30),
+                        primary: const Color.fromARGB(255, 175, 117, 30),
                         onPrimary: Colors.white,
                       ),
                     ),
