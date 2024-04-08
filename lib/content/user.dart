@@ -1,9 +1,4 @@
-import 'dart:convert';
-
-import 'package:absen_polinema/content/mapPage.dart';
 import 'package:flutter/material.dart';
-import 'package:absen_polinema/content/login.dart';
-import 'package:http/http.dart' as http;
 
 class UserPage extends StatefulWidget {
   final String NIM;
@@ -11,6 +6,7 @@ class UserPage extends StatefulWidget {
   final String Domisili;
   final String kelas;
   final String nomorTelp;
+  final String jenisKelamin;
   
   const UserPage({
     super.key,
@@ -18,7 +14,8 @@ class UserPage extends StatefulWidget {
     required this.namaLengkap, 
     required this.Domisili, 
     required this.kelas, 
-    required this.nomorTelp,
+    required this.nomorTelp, 
+    required this.jenisKelamin
   });
 
   @override
@@ -32,6 +29,7 @@ class _UserPageState extends State<UserPage> {
   TextEditingController domisiliController = TextEditingController();
   TextEditingController kelasController = TextEditingController();
   TextEditingController nomorController = TextEditingController();
+  TextEditingController jenisController = TextEditingController();
 
   @override
   void initState() {
@@ -41,90 +39,7 @@ class _UserPageState extends State<UserPage> {
     domisiliController = TextEditingController(text: widget.Domisili);
     kelasController = TextEditingController(text: widget.kelas);
     nomorController = TextEditingController(text: widget.nomorTelp);
-  }
-
-  Future<void> _update() async {
-    var url = Uri.parse("http://192.168.18.204/skripsi_system/update.php");
-    var response = await http.post(
-      url,
-      body: {
-        "NIM": nimController.text,
-        "namaLengkap": namaController.text,
-        "Domisili" : domisiliController.text,
-        "NoTelp" : nomorController.text,
-      },
-    );
-
-    if (response.statusCode == 200) {
-      try {
-        // Handle the response here
-        var jsonResponse = json.decode(response.body);
-
-        if (jsonResponse['status'] == 'success') {
-          // Navigate to the next screen on successful login
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: const Text("Success"),
-                content: Text(jsonResponse['message'] ?? "Data telah diupdate!"),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text("OK"),
-                  ),
-                ],
-              );
-            },
-          );
-        } else {
-          // Handle case when login is not successful
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: const Text("Warning"),
-                content: Text(jsonResponse['message'] ?? "Data Gagal di Update"),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text("OK"),
-                  ),
-                ],
-              );
-            },
-          );
-        }
-      } catch (error) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text("Warning"),
-              content: Text("Server tidak terhubung!"),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text("OK"),
-                ),
-              ],
-            );
-          },
-        );
-
-        // Handle error during JSON decoding
-        print("Error decoding JSON: $error");
-      }
-    } else {
-      // Handle HTTP error status codes
-      print("HTTP error ${response.statusCode}");
-    }
+    jenisController = TextEditingController(text: widget.jenisKelamin);
   }
 
   @override
@@ -157,7 +72,7 @@ class _UserPageState extends State<UserPage> {
                   width: 100,
               ),
               alignment: Alignment.center,
-              padding: EdgeInsets.only(top: 20),
+              padding: EdgeInsets.only(top: 10),
             ),
             Container(
               child: Text("Data Mahasiswa Polinema",
@@ -181,6 +96,7 @@ class _UserPageState extends State<UserPage> {
               width: 320,
               child: TextField(
                 controller: namaController,
+                readOnly: true,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   prefixIcon: Icon(
@@ -205,6 +121,7 @@ class _UserPageState extends State<UserPage> {
               width: 320,
               child: TextField(
                 controller: nimController,
+                readOnly: true,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   prefixIcon: Icon(
@@ -220,41 +137,28 @@ class _UserPageState extends State<UserPage> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(left: 24),
+              padding: EdgeInsets.only(left: 10),
               margin: EdgeInsets.only(top: 20),
               decoration: BoxDecoration(
                 color: Colors.grey.shade200,
                 borderRadius: BorderRadius.circular(20),
               ),
               width: 320,
-              height: 49,
-              child: Row(
-                children: [
-                  Icon(
+              child: TextField(
+                controller: kelasController,
+                readOnly: true,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  prefixIcon: Icon(
                     Icons.class_outlined,
                     color: Colors.black,
                     size: 20,
                   ),
-                  SizedBox(width: 15), // Jarak antara ikon dan teks
-                  Text(
-                    "${widget.kelas}",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 15,
-                      fontFamily: 'Roboto',
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  Spacer(),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: Icon(
-                      Icons.lock_outlined,
-                      color: Colors.black,
-                      size: 20,
-                    ),
-                  ),
-                ],
+                ),
+                style: TextStyle(
+                  fontSize: 15,
+                  fontFamily: 'Roboto',
+                ),
               ),
             ),
             Container(
@@ -267,6 +171,7 @@ class _UserPageState extends State<UserPage> {
               width: 320,
               child: TextField(
                 controller: domisiliController,
+                readOnly: true,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   prefixIcon: Icon(
@@ -291,6 +196,7 @@ class _UserPageState extends State<UserPage> {
               width: 320,
               child: TextField(
                 controller: nomorController,
+                readOnly: true,
                 decoration: InputDecoration(
                   border: InputBorder.none,
                   prefixIcon: Icon(
@@ -306,29 +212,32 @@ class _UserPageState extends State<UserPage> {
               ),
             ),
             Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.only(top: 20),
+              padding: EdgeInsets.only(left: 10),
+              margin: EdgeInsets.only(top: 20),
               decoration: BoxDecoration(
                 color: Colors.grey.shade200,
                 borderRadius: BorderRadius.circular(20),
               ),
               width: 320,
-              child: TextButton.icon(
-                
-                onPressed: () {
-                  _update();
-                },
-                icon: const Icon(
-                  Icons.cloud_upload_outlined,
-                  color: Colors.black,
-                  size: 20,
-                ),
-                label: const Text(
-                  "\t\tUpdate Data",
-                  style: TextStyle(
+              child: TextField(
+                controller: jenisController,
+                readOnly: true,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  prefixIcon: (widget.jenisKelamin == 'Laki-Laki')
+                    ? Icon(
+                    Icons.boy_sharp,
                     color: Colors.black,
-                  ),
-                  textAlign: TextAlign.center,
+                    size: 20,
+                  ) : Icon(
+                    Icons.girl_sharp,
+                    color: Colors.black,
+                    size: 20,
+                  ), 
+                ),
+                style: TextStyle(
+                  fontSize: 15,
+                  fontFamily: 'Roboto',
                 ),
               ),
             ),
