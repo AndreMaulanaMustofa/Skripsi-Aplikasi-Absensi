@@ -428,7 +428,7 @@ class _scanPageState extends State<scanPage> {
                                 ],
                               ),
                               onPressed: () {
-                                Navigator.pop(context);
+                                Navigator.of(context).pop();
                                 isBottomSheetOpened = false;
                               },
                             ),
