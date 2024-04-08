@@ -11,14 +11,18 @@ class BottomNavigate extends StatefulWidget {
   final String Domisili;
   final String kelas;
   final String nomorTelp;
+  final String semester;
+  final String jenisKelamin;
   
   const BottomNavigate({
     super.key,
     required this.NIM,
     required this.namaLengkap, 
     required this.Domisili, 
-    required this.kelas, 
-    required this.nomorTelp,
+    required this.kelas,
+    required this.nomorTelp, 
+    required this.semester, 
+    required this.jenisKelamin
   });
 
   @override
@@ -63,7 +67,12 @@ class _BottomNavigateState extends State<BottomNavigate> {
           Navigator.push(
             context, 
             MaterialPageRoute(
-              builder: (context) => const scanPage()
+              builder: (context) => scanPage(
+                NIM: widget.NIM,
+                namaLengkap: widget.namaLengkap,
+                kelas: widget.kelas,
+                semester: widget.semester,
+              )
             ),
           );
         },
@@ -77,6 +86,7 @@ class _BottomNavigateState extends State<BottomNavigate> {
           Domisili: widget.Domisili,
           nomorTelp: widget.nomorTelp,
           kelas: widget.kelas,
+          jenisKelamin: widget.jenisKelamin
         ) : const mapPage(),
       ),
     );
