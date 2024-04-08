@@ -6,6 +6,7 @@ import 'package:absen_polinema/content/BottomNavigator/BottomNavigate.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class loginPage extends StatefulWidget {
   const loginPage({super.key});
@@ -18,6 +19,11 @@ class _loginPageState extends State<loginPage> {
 
   TextEditingController username = TextEditingController();
   TextEditingController password = TextEditingController();
+
+  Future<void> setLoggedIn() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', true);
+  }
 
   Future<void> _login() async {
     var url = Uri.parse("http://192.168.1.2/skripsi_system/login.php");
@@ -35,7 +41,17 @@ class _loginPageState extends State<loginPage> {
         var jsonResponse = json.decode(response.body);
 
         if (jsonResponse['status'] == 'success') {
-          // Navigate to the next screen on successful login
+          await setLoggedIn();
+
+          final SharedPreferences prefs = await SharedPreferences.getInstance();
+          await prefs.setString('NIM', jsonResponse['NIM']);
+          await prefs.setString('namaLengkap', jsonResponse['namaLengkap']);
+          await prefs.setString('Domisili', jsonResponse['Domisili']);
+          await prefs.setString('kelas', jsonResponse['kelas']);
+          await prefs.setString('nomorTelp', jsonResponse['NoTelp']);
+          await prefs.setString('semester', jsonResponse['semester']);
+          await prefs.setString('jenisKelamin', jsonResponse['jenisKelamin']);
+          
           Navigator.push(
             context,
             MaterialPageRoute(
