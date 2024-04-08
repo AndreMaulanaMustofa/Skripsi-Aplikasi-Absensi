@@ -1,5 +1,7 @@
 // ignore_for_file: file_names
 
+import 'package:absen_polinema/content/LocationSystem/geofencing_service.dart';
+import 'package:absen_polinema/content/LocationSystem/location_service.dart';
 import 'package:absen_polinema/content/scanPage.dart';
 import 'package:flutter/material.dart';
 import 'package:absen_polinema/content/mapPage.dart';
@@ -31,6 +33,29 @@ class BottomNavigate extends StatefulWidget {
 
 class _BottomNavigateState extends State<BottomNavigate> {
   int _selectedIndex = 0;
+  LocationService locationService = LocationService();
+  double latitude = 0.0;
+  double longitude = 0.0;
+  bool zoneStatus = false;
+
+  @override
+  void initState() {
+    super.initState();
+    locationService.locationStream.listen((userLocation) {
+      setState(() {
+        latitude = userLocation.latitude;
+        longitude = userLocation.longitude;
+
+        if (GeofenceHaversine.isInsideGeofence(latitude, longitude)) {
+          print('User telah memasuki zona');
+          zoneStatus = true;
+        } else {
+          print('User sedang diluar zona');
+          zoneStatus = false;
+        }
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,17 +89,37 @@ class _BottomNavigateState extends State<BottomNavigate> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          Navigator.push(
-            context, 
-            MaterialPageRoute(
-              builder: (context) => scanPage(
-                NIM: widget.NIM,
-                namaLengkap: widget.namaLengkap,
-                kelas: widget.kelas,
-                semester: widget.semester,
-              )
-            ),
-          );
+          if(zoneStatus){
+            Navigator.push(
+              context, 
+              MaterialPageRoute(
+                builder: (context) => scanPage(
+                  NIM: widget.NIM,
+                  namaLengkap: widget.namaLengkap,
+                  kelas: widget.kelas,
+                  semester: widget.semester,
+                )
+              ),
+            );
+          }else{
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text("Success"),
+                  content: Text("Lokasi anda tidak berada di kampus!"),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Text("OK"),
+                    ),
+                  ],
+                );
+              },
+            );
+          }
         },
         child: Icon(Icons.qr_code_scanner_rounded),
         backgroundColor: Color.fromARGB(255, 175, 117, 30),
