@@ -51,8 +51,8 @@ class _loginPageState extends State<loginPage> {
           await prefs.setString('nomorTelp', jsonResponse['NoTelp']);
           await prefs.setString('semester', jsonResponse['semester']);
           await prefs.setString('jenisKelamin', jsonResponse['jenisKelamin']);
-          
-          Navigator.push(
+
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) => 
