@@ -122,7 +122,7 @@ class _BottomNavigateState extends State<BottomNavigate> {
           }
         },
         child: Icon(Icons.qr_code_scanner_rounded),
-        backgroundColor: Color.fromARGB(255, 175, 117, 30),
+        backgroundColor: (zoneStatus) ?Color.fromARGB(255, 175, 117, 30) : Colors.grey.shade700,
         foregroundColor: Colors.white,
       ),
       body: _selectedIndex == 0 ? UserPage(
