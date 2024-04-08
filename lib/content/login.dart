@@ -20,7 +20,7 @@ class _loginPageState extends State<loginPage> {
   TextEditingController password = TextEditingController();
 
   Future<void> _login() async {
-    var url = Uri.parse("http://192.168.1.15/skripsi_system/login.php");
+    var url = Uri.parse("http://192.168.1.2/skripsi_system/login.php");
     var response = await http.post(
       url,
       body: {
