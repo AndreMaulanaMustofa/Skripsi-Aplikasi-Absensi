@@ -77,7 +77,7 @@ class _scanPageState extends State<scanPage> {
             builder: (BuildContext context) {
               return AlertDialog(
                 title: const Text("Warning"),
-                content: Text(jsonResponse['message'] ?? "Absensi Gagal Ditambahkan!"),
+                content: Text("Absensi Gagal Ditambahkan!"),
                 actions: [
                   TextButton(
                     onPressed: () {
@@ -133,6 +133,38 @@ class _scanPageState extends State<scanPage> {
           if (result!.code != null && result!.code!.contains(',')) {
               matkul = result!.code!.split(',')[0].trim();
               jamMatkul = result!.code!.split(',')[1].trim();
+
+              List<String> jamMenit = jamMatkul.split(':');
+              int jamKuliah = int.parse(jamMenit[0]);
+              int menitKuliah = int.parse(jamMenit[1]);
+
+              DateTime waktuSekarang = DateTime.now();
+              int jamSekarang = waktuSekarang.hour;
+              int menitSekarang = waktuSekarang.minute;
+
+              int selisihMenit = (jamKuliah - jamSekarang) * 60 + (menitKuliah - menitSekarang);
+
+              if (selisihMenit > 15) {
+                isBottomSheetOpened = true;
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text("Pemberitahuan"),
+                      content: const Text("Anda terlalu awal untuk absen!"),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            isBottomSheetOpened = false;
+                          },
+                          child: const Text("OK"),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }else{
               isBottomSheetOpened = true;
 
               showModalBottomSheet(
@@ -178,7 +210,7 @@ class _scanPageState extends State<scanPage> {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           width: 100,
-                          child: const Text(
+                          child: Text(
                             'NIM:',
                             style: TextStyle(
                               fontSize: 15,
@@ -437,6 +469,7 @@ class _scanPageState extends State<scanPage> {
                       ],
                     ));
                 });
+              }
             }
           };
       });
