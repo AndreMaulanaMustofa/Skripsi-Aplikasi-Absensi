@@ -26,7 +26,7 @@ class _loginPageState extends State<loginPage> {
   }
 
   Future<void> _login() async {
-    var url = Uri.parse("http://192.168.1.2/skripsi_system/login.php");
+    var url = Uri.parse("http://192.168.18.204/skripsi_system/login.php");
     var response = await http.post(
       url,
       body: {
