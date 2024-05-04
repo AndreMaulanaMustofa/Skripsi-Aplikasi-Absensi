@@ -97,7 +97,7 @@ class _BottomNavigateState extends State<BottomNavigate> {
                   NIM: widget.NIM,
                   namaLengkap: widget.namaLengkap,
                   kelas: widget.kelas,
-                  semester: widget.semester,
+                  semester: widget.semester
                 )
               ),
             );
