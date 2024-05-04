@@ -36,6 +36,7 @@ class _SplashScreenHandlerState extends State<SplashScreenHandler> {
   late String _nomorTelp;
   late String _semester;
   late String _jenisKelamin;
+  
 
   @override
   void initState() {
