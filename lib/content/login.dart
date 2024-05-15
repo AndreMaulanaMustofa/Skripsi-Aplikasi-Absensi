@@ -23,7 +23,7 @@ class _loginPageState extends State<loginPage> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isLoggedIn', true);
   }
-  
+
   Future<void> _login() async {
     var primaryURL =
         Uri.parse("http://192.168.74.154/skripsi_system/login.php");

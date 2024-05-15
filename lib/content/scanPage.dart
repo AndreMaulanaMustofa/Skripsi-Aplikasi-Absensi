@@ -32,9 +32,9 @@ class _scanPageState extends State<scanPage> {
 
   Future<void> _create(matkul, jam, hari) async {
     var primaryURL =
-        Uri.parse("http://192.168.74.154/skripsi_system/login.php");
+        Uri.parse("http://192.168.74.154/skripsi_system/update.php");
     var secondaryURL =
-        Uri.parse("http://192.168.73.242/skripsi_system/login.php");
+        Uri.parse("http://192.168.73.242/skripsi_system/update.php");
     var response;
 
     try {
