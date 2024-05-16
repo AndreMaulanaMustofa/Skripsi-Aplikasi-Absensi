@@ -31,10 +31,10 @@ class _scanPageState extends State<scanPage> {
   bool isBottomSheetOpened = false;
 
   Future<void> _create(matkul, jam, hari) async {
-    var primaryURL =
-        Uri.parse("http://192.168.74.154/skripsi_system/update.php");
+    var primaryURL = Uri.parse("http://192.168.75.4/skripsi_system/update.php");
     var secondaryURL =
         Uri.parse("http://192.168.73.242/skripsi_system/update.php");
+    var thirdURL = Uri.parse("http://192.168.18.204/skripsi_system/update.php");
     var response;
 
     try {
@@ -71,23 +71,40 @@ class _scanPageState extends State<scanPage> {
       } catch (errorSecondary) {
         print("Error connecting to secondaryURL: $errorSecondary");
 
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text("Warning"),
-              content: const Text("Tidak dapat terhubung ke server!"),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text("OK"),
-                ),
-              ],
-            );
-          },
-        );
+        try {
+          response = await http.post(
+            thirdURL,
+            body: {
+              "NIM": nimController.text,
+              "namaMahasiswa": namaController.text,
+              "kelas": kelasController.text,
+              "semester": semesterController.text,
+              "mataKuliah": matkul,
+              "jam_kuliah": jam,
+              "hari": hari
+            },
+          ).timeout(const Duration(seconds: 1));
+        } catch (errorThird) {
+          print("Error connecting to thirdURL: $errorThird");
+
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text("Warning"),
+                content: const Text("Tidak dapat terhubung ke server!"),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("OK"),
+                  ),
+                ],
+              );
+            },
+          );
+        }
       }
     }
 

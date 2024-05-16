@@ -26,9 +26,11 @@ class _loginPageState extends State<loginPage> {
 
   Future<void> _login() async {
     var primaryURL =
-        Uri.parse("http://192.168.74.154/skripsi_system/login.php");
+        Uri.parse("http://192.168.75.4/skripsi_system/login.php");
     var secondaryURL =
         Uri.parse("http://192.168.73.242/skripsi_system/login.php");
+    var thirdURL = 
+        Uri.parse("http://192.168.18.204/skripsi_system/login.php");
     var response;
 
     try {
@@ -54,6 +56,17 @@ class _loginPageState extends State<loginPage> {
         ).timeout(const Duration(seconds: 1));
       } catch (errorSecondary) {
         print("Error connecting to secondaryURL: $errorSecondary");
+        
+      try {
+        response = await http.post(
+          thirdURL,
+          body: {
+            "NIM": username.text,
+            "Password": password.text,
+          },
+        ).timeout(const Duration(seconds: 1));
+      } catch (errorThird) {
+        print("Error connecting to thirdURL: $errorThird");
 
         showDialog(
           context: context,
@@ -74,6 +87,7 @@ class _loginPageState extends State<loginPage> {
         );
       }
     }
+  }
 
     // Hasil response apabila login berhasil
     if (response.statusCode == 200) {
