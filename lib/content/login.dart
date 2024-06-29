@@ -26,11 +26,11 @@ class _loginPageState extends State<loginPage> {
 
   Future<void> _login() async {
     var primaryURL =
-        Uri.parse("http://192.168.75.4/skripsi_system/login.php");
-    var secondaryURL =
-        Uri.parse("http://192.168.73.242/skripsi_system/login.php");
-    var thirdURL = 
         Uri.parse("http://192.168.18.204/skripsi_system/login.php");
+    var secondaryURL =
+        Uri.parse("http://192.168.73.182/skripsi_system/login.php");
+    var thirdURL = 
+        Uri.parse("http://192.168.74.187/skripsi_system/login.php");
     var response;
 
     try {

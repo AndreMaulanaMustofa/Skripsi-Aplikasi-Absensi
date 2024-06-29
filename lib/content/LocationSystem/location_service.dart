@@ -3,8 +3,9 @@ import 'dart:async';
 import 'package:absen_polinema/content/LocationSystem/user_location.dart';
 import 'package:location/location.dart';
 
+// Kelas layanan lokasi untuk memantau dan memancarkan perubahan lokasi
 class LocationService{
-  Location location = Location();
+  Location location = Location(); // Membuat instance dari kelas Location
   StreamController<UserLocation> _locationStreamController = StreamController<UserLocation>();
   Stream<UserLocation> get locationStream => _locationStreamController.stream;
 

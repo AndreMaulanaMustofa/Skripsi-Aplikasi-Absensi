@@ -25,20 +25,23 @@ class _scanPageState extends State<scanPage> {
   final GlobalKey qrKey = GlobalKey(debugLabel: "QR");
   QRViewController? controller;
   Barcode? result;
+  String semester = '';
+  String kelas = '';
   String matkul = '';
   String jamMatkul = '';
   String hari = '';
   bool isBottomSheetOpened = false;
 
   Future<void> _create(matkul, jam, hari) async {
-    var primaryURL = Uri.parse("http://192.168.75.4/skripsi_system/update.php");
+    var primaryURL =
+        Uri.parse("http://192.168.18.204/skripsi_system/update.php");
     var secondaryURL =
-        Uri.parse("http://192.168.73.242/skripsi_system/update.php");
-    var thirdURL = Uri.parse("http://192.168.18.204/skripsi_system/update.php");
+        Uri.parse("http://192.168.73.182/skripsi_system/update.php");
+    var thirdURL = 
+        Uri.parse("http://192.168.74.187/skripsi_system/update.php");
     var response;
 
     try {
-      // Coba kirim permintaan ke primaryURL
       response = await http.post(
         primaryURL,
         body: {
@@ -194,9 +197,11 @@ class _scanPageState extends State<scanPage> {
         result = scanData;
         if (!isBottomSheetOpened) {
           if (result!.code != null && result!.code!.contains(',')) {
-            matkul = result!.code!.split(',')[0].trim();
-            jamMatkul = result!.code!.split(',')[1].trim();
-            hari = result!.code!.split(',')[2].trim();
+            kelas = result!.code!.split(',')[0].trim();
+            semester = result!.code!.split(',')[1].trim();
+            matkul = result!.code!.split(',')[2].trim();
+            jamMatkul = result!.code!.split(',')[3].trim();
+            hari = result!.code!.split(',')[4].trim();
 
             List<String> jamMenit = jamMatkul.split(':');
             int jamKuliah = int.parse(jamMenit[0]);
@@ -229,6 +234,26 @@ class _scanPageState extends State<scanPage> {
                   );
                 },
               );
+            } else if (kelas != widget.kelas || semester != widget.semester) {
+              isBottomSheetOpened = true;
+
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text("Pemberitahuan"),
+                      content: const Text("Anda melakukan absen di kelas lain"),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            isBottomSheetOpened = false;
+                          },
+                          child: const Text("OK"),
+                        )
+                      ],
+                    );
+                  });
             } else {
               isBottomSheetOpened = true;
 
