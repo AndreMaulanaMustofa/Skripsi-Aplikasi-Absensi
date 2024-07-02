@@ -30,15 +30,15 @@ class _scanPageState extends State<scanPage> {
   String matkul = '';
   String jamMatkul = '';
   String hari = '';
+  String tanggalJadwal = '';
   bool isBottomSheetOpened = false;
 
-  Future<void> _create(matkul, jam, hari) async {
+  Future<void> _create(matkul, jam, hari, tgl) async {
     var primaryURL =
         Uri.parse("http://192.168.18.204/skripsi_system/update.php");
     var secondaryURL =
         Uri.parse("http://192.168.73.182/skripsi_system/update.php");
-    var thirdURL = 
-        Uri.parse("http://192.168.74.187/skripsi_system/update.php");
+    var thirdURL = Uri.parse("http://192.168.74.187/skripsi_system/update.php");
     var response;
 
     try {
@@ -51,7 +51,8 @@ class _scanPageState extends State<scanPage> {
           "semester": semesterController.text,
           "mataKuliah": matkul,
           "jam_kuliah": jam,
-          "hari": hari
+          "hari": hari,
+          "tanggal_jadwal": tgl
         },
       ).timeout(const Duration(seconds: 1));
     } catch (error) {
@@ -68,7 +69,8 @@ class _scanPageState extends State<scanPage> {
             "semester": semesterController.text,
             "mataKuliah": matkul,
             "jam_kuliah": jam,
-            "hari": hari
+            "hari": hari,
+            "tanggal_jadwal": tgl
           },
         ).timeout(const Duration(seconds: 1));
       } catch (errorSecondary) {
@@ -84,7 +86,8 @@ class _scanPageState extends State<scanPage> {
               "semester": semesterController.text,
               "mataKuliah": matkul,
               "jam_kuliah": jam,
-              "hari": hari
+              "hari": hari,
+              "tanggal_jadwal": tgl
             },
           ).timeout(const Duration(seconds: 1));
         } catch (errorThird) {
@@ -200,8 +203,9 @@ class _scanPageState extends State<scanPage> {
             kelas = result!.code!.split(',')[0].trim();
             semester = result!.code!.split(',')[1].trim();
             matkul = result!.code!.split(',')[2].trim();
-            jamMatkul = result!.code!.split(',')[3].trim();
-            hari = result!.code!.split(',')[4].trim();
+            tanggalJadwal = result!.code!.split(',')[3].trim();
+            jamMatkul = result!.code!.split(',')[4].trim();
+            hari = result!.code!.split(',')[5].trim();
 
             List<String> jamMenit = jamMatkul.split(':');
             int jamKuliah = int.parse(jamMenit[0]);
@@ -213,6 +217,15 @@ class _scanPageState extends State<scanPage> {
 
             int selisihMenit =
                 (jamKuliah - jamSekarang) * 60 + (menitKuliah - menitSekarang);
+
+            List<String> tanggalkuliah = tanggalJadwal.split('-');
+            int tanggal = int.parse(tanggalkuliah[0]);
+            int bulan = int.parse(tanggalkuliah[1]);
+            int tahun = int.parse(tanggalkuliah[2]);
+
+            bool isTanggalFit = tanggal == waktuSekarang.day &&
+                bulan == waktuSekarang.month &&
+                tahun == waktuSekarang.year;
 
             if (selisihMenit > 15) {
               isBottomSheetOpened = true;
@@ -243,6 +256,26 @@ class _scanPageState extends State<scanPage> {
                     return AlertDialog(
                       title: const Text("Pemberitahuan"),
                       content: const Text("Anda melakukan absen di kelas lain"),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            isBottomSheetOpened = false;
+                          },
+                          child: const Text("OK"),
+                        )
+                      ],
+                    );
+                  });
+            } else if (!isTanggalFit) {
+              isBottomSheetOpened = true;
+
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: const Text("Pemberitahuan"),
+                      content: const Text("Tanggal Tidak Sesuai."),
                       actions: [
                         TextButton(
                           onPressed: () {
@@ -561,7 +594,8 @@ class _scanPageState extends State<scanPage> {
                                     ],
                                   ),
                                   onPressed: () {
-                                    _create(matkul, jamMatkul, hari);
+                                    _create(
+                                        matkul, jamMatkul, hari, tanggalJadwal);
                                   },
                                 ),
                                 ElevatedButton(
